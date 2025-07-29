@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Validador QR - Fiesta</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; text-align: center; }
+    #result { margin-top: 1rem; font-size: 1.2rem; font-weight: bold; }
+    input, button, textarea { margin: 0.5rem 0; padding: 0.5rem; width: 100%; }
+    .ok { color: green; }
+    .used { color: orange; }
+    .invalid { color: red; }
+  </style>
+</head>
+<body>
+  <h2>🎉 Validador de Entradas QR</h2>
+
+  <textarea id="codeInput" placeholder="Códigos válidos, uno por línea"></textarea>
+  <button onclick="loadCodes()">Cargar códigos válidos</button>
+
+  <button onclick="startScanner()">📷 Iniciar escáner</button>
+  <button onclick="stopScanner()">🛑 Detener escáner</button>
+
+  <div id="reader" style="width: 300px; margin: auto; margin-top: 1rem;"></div>
+  <div id="result">Esperando escaneo...</div>
+
+  <script>
+    let validCodes = new Set();
+    let usedCodes = new Set(JSON.parse(localStorage.getItem('usedCodes') || '[]'));
+    let qrScanner;
+
+    function loadCodes() {
+      const lines = document.getElementById('codeInput').value.split('\n').map(l => l.trim()).filter(l => l);
+      validCodes = new Set(lines);
+      alert("Códigos cargados: " + validCodes.size);
+    }
+
+    function saveUsedCodes() {
+      localStorage.setItem('usedCodes', JSON.stringify([...usedCodes]));
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+      const resultEl = document.getElementById('result');
+
+      if (validCodes.has(decodedText)) {
+        if (usedCodes.has(decodedText)) {
+          resultEl.innerText = `⚠️ Código ${decodedText} ya fue usado`;
+          resultEl.className = 'used';
+        } else {
+          resultEl.innerText = `✅ Entrada válida: ${decodedText}`;
+          resultEl.className = 'ok';
+          usedCodes.add(decodedText);
+          saveUsedCodes();
+        }
+      } else {
+        resultEl.innerText = `❌ Código inválido: ${decodedText}`;
+        resultEl.className = 'invalid';
+      }
+    }
+
+    function startScanner() {
+      qrScanner = new Html5Qrcode("reader");
+      qrScanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        onScanSuccess,
+        (errorMessage) => {
+          console.warn("Escaneo fallido: ", errorMessage);
+        }
+      ).catch(err => {
+        document.getElementById('result').innerText = "❌ Error al iniciar la cámara: " + err;
+        document.getElementById('result').className = 'invalid';
+      });
+    }
+
+    function stopScanner() {
+      if (qrScanner) {
+        qrScanner.stop().then(() => {
+          document.getElementById('result').innerText = "Escáner detenido.";
+          document.getElementById('result').className = '';
+        }).catch(err => {
+          console.error("Error al detener el escáner: ", err);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
