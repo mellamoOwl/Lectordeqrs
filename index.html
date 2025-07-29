@@ -34,7 +34,7 @@
     function loadCodes() {
       const lines = document.getElementById('codeInput').value.split('\n').map(l => l.trim()).filter(l => l);
       validCodes = new Set(lines);
-      document.getElementById('result').innerText = "✅ Códigos cargados: " + validCodes.size;
+      document.getElementById('result').innerText = " Códigos cargados: " + validCodes.size;
       document.getElementById('result').className = 'ok';
     }
 
@@ -46,29 +46,43 @@
       if (confirm("¿Seguro que querés borrar los códigos escaneados?")) {
         localStorage.removeItem('usedCodes');
         usedCodes = new Set();
-        document.getElementById('result').innerText = "🧹 Lista de códigos usados borrada.";
+        document.getElementById('result').innerText = " Lista de códigos usados borrada.";
         document.getElementById('result').className = '';
       }
     }
 
-    function onScanSuccess(decodedText, decodedResult) {
-      const resultEl = document.getElementById('result');
+    let lastScanned = null;
+let lastScannedTime = 0;
 
-      if (validCodes.has(decodedText)) {
-        if (usedCodes.has(decodedText)) {
-          resultEl.innerText = `⚠️ Código ${decodedText} ya fue usado`;
-          resultEl.className = 'used';
-        } else {
-          resultEl.innerText = `✅ Entrada válida: ${decodedText}`;
-          resultEl.className = 'ok';
-          usedCodes.add(decodedText);
-          saveUsedCodes();
-        }
-      } else {
-        resultEl.innerText = `❌ Código inválido: ${decodedText}`;
-        resultEl.className = 'invalid';
-      }
+function onScanSuccess(decodedText, decodedResult) {
+  const now = Date.now();
+
+  // Evitar reacciones múltiples al mismo código escaneado en menos de 3 segundos
+  if (decodedText === lastScanned && (now - lastScannedTime) < 3000) {
+    return;
+  }
+
+  lastScanned = decodedText;
+  lastScannedTime = now;
+
+  const resultEl = document.getElementById('result');
+
+  if (validCodes.has(decodedText)) {
+    if (usedCodes.has(decodedText)) {
+      resultEl.innerText = `⚠ Código ${decodedText} ya fue usado`;
+      resultEl.className = 'used';
+    } else {
+      resultEl.innerText = ` Entrada válida: ${decodedText}`;
+      resultEl.className = 'ok';
+      usedCodes.add(decodedText);
+      saveUsedCodes();
     }
+  } else {
+    resultEl.innerText = ` Código inválido: ${decodedText}`;
+    resultEl.className = 'invalid';
+  }
+}
+
 
     function startScanner() {
       qrScanner = new Html5Qrcode("reader");
