@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Validador QR - Fiesta</title>
+  <title>Validador QR - Orbit</title>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
     body { font-family: sans-serif; padding: 1rem; text-align: center; }
@@ -60,15 +60,8 @@
         resultEl.innerText = `❌ Código inválido: ${decodedText}`;
         resultEl.className = 'invalid';
       }
-      function clearUsedCodes() {
-  if (confirm("¿Estás seguro que querés borrar la lista de códigos usados?")) {
-    usedCodes.clear();
-    localStorage.removeItem('usedCodes');
-    alert("Lista de códigos usados borrada.");
-  }
+      
 }
-
-    }
 
     function startScanner() {
       qrScanner = new Html5Qrcode("reader");
@@ -95,6 +88,12 @@
         });
       }
     }
+    function clearUsedCodes() {
+  if (confirm("¿Estás seguro que querés borrar la lista de códigos usados?")) {
+    usedCodes.clear();
+    localStorage.removeItem('usedCodes');
+    alert("Lista de códigos usados borrada.");
+  }
   </script>
 </body>
 </html>
