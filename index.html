@@ -58,7 +58,7 @@ function onScanSuccess(decodedText, decodedResult) {
   const now = Date.now();
 
   // Evitar reacciones múltiples al mismo código escaneado en menos de 3 segundos
-  if (decodedText === lastScanned && (now - lastScannedTime) < 3000) {
+  if (decodedText === lastScanned && (now - lastScannedTime) < 10000) {
     return;
   }
 
