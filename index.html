@@ -17,13 +17,11 @@
   <h2> Validador de Entradas QR</h2>
 
   <textarea id="codeInput" placeholder="Códigos válidos, uno por línea"></textarea>
-  <button onclick="loadCodes()">Cargar códigos válidos</button>
+  <button onclick="loadCodes()"> Cargar códigos válidos</button>
 
   <button onclick="startScanner()"> Iniciar escáner</button>
   <button onclick="stopScanner()"> Detener escáner</button>
-  <button onclick="clearUsedCodes()"> Borrar QRs usados</button>
-
-
+  <button onclick="clearUsedCodes()"> Borrar códigos usados</button>
 
   <div id="reader" style="width: 300px; margin: auto; margin-top: 1rem;"></div>
   <div id="result">Esperando escaneo...</div>
@@ -36,11 +34,21 @@
     function loadCodes() {
       const lines = document.getElementById('codeInput').value.split('\n').map(l => l.trim()).filter(l => l);
       validCodes = new Set(lines);
-      alert("Códigos cargados: " + validCodes.size);
+      document.getElementById('result').innerText = "✅ Códigos cargados: " + validCodes.size;
+      document.getElementById('result').className = 'ok';
     }
 
     function saveUsedCodes() {
       localStorage.setItem('usedCodes', JSON.stringify([...usedCodes]));
+    }
+
+    function clearUsedCodes() {
+      if (confirm("¿Seguro que querés borrar los códigos escaneados?")) {
+        localStorage.removeItem('usedCodes');
+        usedCodes = new Set();
+        document.getElementById('result').innerText = "🧹 Lista de códigos usados borrada.";
+        document.getElementById('result').className = '';
+      }
     }
 
     function onScanSuccess(decodedText, decodedResult) {
@@ -60,8 +68,7 @@
         resultEl.innerText = `❌ Código inválido: ${decodedText}`;
         resultEl.className = 'invalid';
       }
-      
-}
+    }
 
     function startScanner() {
       qrScanner = new Html5Qrcode("reader");
@@ -88,12 +95,7 @@
         });
       }
     }
-    function clearUsedCodes() {
-  if (confirm("¿Estás seguro que querés borrar la lista de códigos usados?")) {
-    usedCodes.clear();
-    localStorage.removeItem('usedCodes');
-    alert("Lista de códigos usados borrada.");
-  }
   </script>
 </body>
 </html>
+
