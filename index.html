@@ -58,7 +58,7 @@ function onScanSuccess(decodedText, decodedResult) {
   const now = Date.now();
 
   // Evitar reacciones múltiples al mismo código escaneado en menos de 3 segundos
-  if (decodedText === lastScanned && (now - lastScannedTime) < 10000) {
+  if (decodedText === lastScanned && (now - lastScannedTime) < 1500) {
     return;
   }
 
@@ -94,7 +94,7 @@ function onScanSuccess(decodedText, decodedResult) {
           console.warn("Escaneo fallido: ", errorMessage);
         }
       ).catch(err => {
-        document.getElementById('result').innerText = "❌ Error al iniciar la cámara: " + err;
+        document.getElementById('result').innerText = " Error al iniciar la cámara: " + err;
         document.getElementById('result').className = 'invalid';
       });
     }
