@@ -14,13 +14,16 @@
   </style>
 </head>
 <body>
-  <h2>🎉 Validador de Entradas QR</h2>
+  <h2> Validador de Entradas QR</h2>
 
   <textarea id="codeInput" placeholder="Códigos válidos, uno por línea"></textarea>
   <button onclick="loadCodes()">Cargar códigos válidos</button>
 
-  <button onclick="startScanner()">📷 Iniciar escáner</button>
-  <button onclick="stopScanner()">🛑 Detener escáner</button>
+  <button onclick="startScanner()"> Iniciar escáner</button>
+  <button onclick="stopScanner()"> Detener escáner</button>
+  <button onclick="clearUsedCodes()"> Borrar QRs usados</button>
+
+
 
   <div id="reader" style="width: 300px; margin: auto; margin-top: 1rem;"></div>
   <div id="result">Esperando escaneo...</div>
@@ -57,6 +60,14 @@
         resultEl.innerText = `❌ Código inválido: ${decodedText}`;
         resultEl.className = 'invalid';
       }
+      function clearUsedCodes() {
+  if (confirm("¿Estás seguro que querés borrar la lista de códigos usados?")) {
+    usedCodes.clear();
+    localStorage.removeItem('usedCodes');
+    alert("Lista de códigos usados borrada.");
+  }
+}
+
     }
 
     function startScanner() {
