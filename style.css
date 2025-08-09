@@ -1,6 +1,6 @@
 .qr-btn {
     display: block;
-    width: 40%; /* Ajusta el ancho aquí */
+    width: 20%; /* Ajusta el ancho aquí */
     margin: 10px auto; /* Centra horizontalmente */
     padding: 10px;
     font-size: 16px;
@@ -45,26 +45,6 @@ header img {
     height: 250px;
 }
 
-button {
-    display: block;
-    width: 40%; /* Ahora ocupan menos ancho */
-    margin: 10px auto; /* Centra horizontalmente */
-    padding: 10px;
-    font-size: 16px;
-    background-color: #ffffff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background-color: #444;
-}
-
-
-/* Lector QR más grande */
 #reader {
     width: 400px !important;
     margin: 20px auto;
