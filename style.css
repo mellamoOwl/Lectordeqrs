@@ -1,3 +1,21 @@
+.qr-btn {
+    display: block;
+    width: 40%; /* Ajusta el ancho aquí */
+    margin: 10px auto; /* Centra horizontalmente */
+    padding: 10px;
+    font-size: 16px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.qr-btn:hover {
+    background-color: #444;
+}
+
 /* Fondo general */
 body {
     background-color: #131413;
