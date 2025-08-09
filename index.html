@@ -23,11 +23,12 @@
   <h2> Validador de Entradas QR</h2>
 
   <textarea id="codeInput" placeholder="Códigos válidos, uno por línea"></textarea>
+ <div class="botones-container">
   <button onclick="loadCodes()" class="qr-btn"> Cargar códigos válidos</button>
-
   <button onclick="startScanner()" class="qr-btn"> Iniciar escáner</button>
   <button onclick="stopScanner()" class="qr-btn"> Detener escáner</button>
   <button onclick="clearUsedCodes()" class="qr-btn"> Borrar códigos usados</button>
+  </div>
 
   <div id="reader" style="width: 300px; margin: auto; margin-top: 1rem;"></div>
  
@@ -119,6 +120,7 @@ function onScanSuccess(decodedText, decodedResult) {
   </script>
 </body>
 </html>
+
 
 
 
