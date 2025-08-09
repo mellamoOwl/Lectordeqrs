@@ -1,3 +1,14 @@
+.botones-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    gap: 10px; /* Espacio entre botones */
+}
+
+.botones-container button {
+    width: 120px; /* Ajusta el tamaño */
+    height: 40px;
+}
+
 .qr-btn {
     display: block;
     width: 20%; /* Ajusta el ancho aquí */
