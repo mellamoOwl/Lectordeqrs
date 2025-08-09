@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+ <audio id="success-sound" src="success.mp3" preload="auto"></audio>
   <meta charset="UTF-8">
   <title>Validador QR - Orbit</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
     body { font-family: sans-serif; padding: 1rem; text-align: center; }
@@ -14,6 +16,10 @@
   </style>
 </head>
 <body>
+ <header>
+    <img src="orbitlogo.png" alt="Orbit Logo" class="logo">
+</header>
+
   <h2> Validador de Entradas QR</h2>
 
   <textarea id="codeInput" placeholder="Códigos válidos, uno por línea"></textarea>
@@ -74,6 +80,7 @@ function onScanSuccess(decodedText, decodedResult) {
     } else {
       resultEl.innerText = ` Entrada válida: ${decodedText}`;
       resultEl.className = 'ok';
+      document.getElementById("success-sound").play();
       usedCodes.add(decodedText);
       saveUsedCodes();
     }
