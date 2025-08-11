@@ -1,25 +1,28 @@
+/* Contenedor de botones */
 .botones-container {
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     gap: 10px; /* Espacio entre botones */
+    flex-wrap: wrap; /* Evita que se rompa en pantallas chicas */
 }
 
 .botones-container button {
     width: 120px; /* Ajusta el tamaño */
     height: 40px;
+    font-size: 14px;
 }
 
+/* Botón QR */
 .qr-btn {
-    display: block;
-    width: 20%; /* Ajusta el ancho aquí */
-    margin: 10px auto; /* Centra horizontalmente */
-    padding: 10px;
-    font-size: 16px;
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
     background-color: #222;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s;
+    color: white;
 }
 
 .qr-btn:hover {
@@ -39,20 +42,22 @@ body {
 header {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    border-bottom: 2px solid #2b2b2b;
+    justify-content: center;
     background-color: #000000; /* Negro */
     padding: 20px 0;
-    text-align: center; /* Centra el contenido */
-
 }
+
 header .logo {
-    width: 150px; /* Más grande que antes */
+    width: 200px; /* Más grande que antes */
     height: auto;
 }
 
-header img {
-    height: 250px;
+/* Imagen orbit.png centrada */
+.logo {
+    display: block;
+    margin: 20px auto;
+    max-width: 300px;
+    max-height: 300px;
 }
 
 #reader {
@@ -68,10 +73,4 @@ header img {
     margin-top: 15px;
     padding: 10px;
     border-radius: 6px;
-}
-.logo {
-    display: block;
-    margin: 20px auto;
-    max-width: 300px;
-    max-height: 300px;
 }
